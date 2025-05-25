@@ -2,7 +2,8 @@
 
 namespace App\DataFixtures;
 
-use App\Entity\Categorie; // Import de l'entité Categorie
+use App\Entity\Categorie; // import entité categorie
+use App\Entity\Statut;   // import entité statut
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
@@ -10,19 +11,26 @@ class AppFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
-        // Liste des noms de catégorie
-        $categoriesNoms = ["Incident", "Panne", "Évolution", "Anomalie", "Information"];
+        // --- création des catégories ---
+        $categoriesNoms = ["Incident", "Panne", "Évolution", "Anomalie", "Information"]; // noms des catégories
 
-        // Boucle persistante
+        // boucle pour chaque catégorie
         foreach ($categoriesNoms as $nom) {
-            $categorie = new Categorie();
-            $categorie->setNom($nom);
-            $manager->persist($categorie); // Prépare la catégorie pour la sauvegarde
+            $categorie = new Categorie(); // nouvelle catégorie
+            $categorie->setNom($nom);     // son nom
+            $manager->persist($categorie); // on prépare la sauvegarde
         }
 
-        // $product = new Product(); // Ligne d'exemple originale
-        // $manager->persist($product); // Ligne d'exemple originale
+        // --- création des statuts ---
+        $statutsNoms = ["Nouveau", "Ouvert", "Résolu", "Fermé"]; // noms des statuts
 
-        $manager->flush(); // Enregistre ttes les catégories préparées en bd
+        // boucle pour chaque statut
+        foreach ($statutsNoms as $nom) {
+            $statut = new Statut(); // création objet statut
+            $statut->setNom($nom);   // son nom
+            $manager->persist($statut); // on prépare la sauvegarde
+        }
+
+        $manager->flush(); // enregistrement en bdd (catégories & statuts)
     }
 }
