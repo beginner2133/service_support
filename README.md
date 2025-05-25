@@ -25,7 +25,23 @@ Suite à cette étape, le fichier README sera mis à jour régulièrement en mê
 L'objectif est de proposer ici une visibilité sur la progression (logique) de ce projet
 Les commentaires ds le code se veulent simples & explicatifs, ds l'idée de partager mon expérience d'apprentissage.
 
+## ce qu'il faut faire
+### config 
 
+* Création du projet Symfony version 6.4 (en suivant le cours "Les bases de Symfony")
+* Configuration BDD
+* Création entités Categorie, Statut, Utilisateur, Ticket
+* Migrations pour schéma BDD
+* Installation doctrine/doctrine-fixtures-bundle
+* Ajout fixtures pour catégories & statuts
+* Création & première mise à jour du fichier README.md
+* Chargement des fixtures (catégories& statuts) en bd
+
+### fixture utilisateur administrateur
+* ajout de l'utilisateur administrateur (`admin@agence.correcteur.fr`) ds `AppFixtures.php`
+* utilisation de `UserPasswordHasherInterface` pour sécuriser le mp
+* chargement des fixtures (incluant l'admin) en bdd
+* mise à jour du `README.md`
 
 
 
