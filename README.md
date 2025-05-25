@@ -42,6 +42,12 @@ Les commentaires ds le code se veulent simples & explicatifs, ds l'idée de part
 * utilisation de `UserPasswordHasherInterface` pour sécuriser le mp
 * chargement des fixtures (incluant l'admin) en bdd
 * mise à jour du `README.md`
+### Système d'Authentification
+* mise en place du système d'authentification avec `make:auth`
+* configuration de la redirection après connexion ds `AppAuthenticator.php` vers `app_home`
+* création de `HomeController` & du template `home/index.html.twig` pour `app_home`
+* configuration de la redirection après déconnexion ds `security.yaml` vers `app_login`
+* tests connexion/déconnexion ok 
 
 
 

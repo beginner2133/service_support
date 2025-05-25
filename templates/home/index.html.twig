@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{# titre de la page #}
+{% block title %}Accueil - Service Support Agence{% endblock %}
+
+{# contenu principal #}
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 960px; width: 95%; font: 18px/1.5 sans-serif; padding: 20px; background-color: #f9f9f9; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+    .example-wrapper h1 { color: #333; border-bottom: 2px solid #eee; padding-bottom: 0.5em; margin-bottom: 0.75em; }
+    .example-wrapper p { color: #555; line-height: 1.6; }
+    .example-wrapper code { background: #E8E8E8; padding: 2px 6px; border-radius: 4px; }
+    .user-info { margin-top: 2em; padding-top: 1em; border-top: 1px solid #ddd; font-size: 0.9em; color: #777; }
+    .btn-primary-custom { background-color: #007bff; border-color: #007bff; color: white; padding: 10px 15px; text-decoration: none; border-radius: 5px; display: inline-block; margin-top: 10px; }
+    .btn-primary-custom:hover { background-color: #0056b3; border-color: #0056b3; }
+    .lead { font-size: 1.25em; font-weight: 300; margin-bottom: 1em; }
+</style>
+
+<div class="example-wrapper">
+    <h1>Bienvenue sur l'Espace Interne de l'Agence !👋</h1>
+
+    {# affiche un message spécifique si passé par le contrôleur #}
+    {% if message is defined and message is not empty %}
+        <p class="lead" style="color: green;">{{ message }}</p>
+    {% endif %}
+
+    <p class="lead">
+        Ceci est votre tableau de bord principal. D'ici, vous pourrez accéder aux différentes fonctionnalités
+        de gestion des tickets clients.
+    </p>
+
+    <p>
+        Utilisez le menu de navigation pour accéder à :
+    </p>
+    <ul>
+        <li>La liste des tickets en cours.</li>
+        <li>La création de nouveaux tickets (si vous en avez les droits).</li>
+        <li>La gestion des catégories & des statuts (pour les administrateurs).</li>
+        <li>& bien plus encore !</li>
+    </ul>
+
+    <p>
+        Nous travaillons à rendre cet outil le plus efficace possible pour Tous.
+    </p>
+
+    {# informations sur l'utilisateur connecté & lien de déconnexion #}
+    {% if app.user %}
+        <div class="user-info">
+            Connecté en tant que : <strong>{{ app.user.userIdentifier }}</strong>
+            (Rôles : {{ app.user.roles|join(', ') }})<br>
+            <a href="{{ path('app_logout') }}" class="btn-primary-custom" style="margin-top: 0.5em;">Se déconnecter</a>
+        </div>
+    {% else %}
+        <p>
+            Pour accéder aux fonctionnalités, veuillez vous <a href="{{ path('app_login') }}" class="btn-primary-custom">connecter</a>.
+        </p>
+    {% endif %}
+</div>
+{% endblock %}
