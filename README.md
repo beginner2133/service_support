@@ -26,7 +26,6 @@ L'objectif est de proposer ici une visibilité sur la progression (logique) de c
 Les commentaires ds le code se veulent simples & explicatifs, ds l'idée de partager mon expérience d'apprentissage.
 
 ## ce qu'il faut faire
-### config 
 
 * Création du projet Symfony version 6.4 (en suivant le cours "Les bases de Symfony")
 * Configuration BDD
@@ -42,12 +41,23 @@ Les commentaires ds le code se veulent simples & explicatifs, ds l'idée de part
 * utilisation de `UserPasswordHasherInterface` pour sécuriser le mp
 * chargement des fixtures (incluant l'admin) en bdd
 * mise à jour du `README.md`
+
 ### Système d'Authentification
 * mise en place du système d'authentification avec `make:auth`
 * configuration de la redirection après connexion ds `AppAuthenticator.php` vers `app_home`
 * création de `HomeController` & du template `home/index.html.twig` pour `app_home`
 * configuration de la redirection après déconnexion ds `security.yaml` vers `app_login`
 * tests connexion/déconnexion ok 
+
+### Page Public & Soumission du Ticket "client et/ou visiteur"
+* création de la route `/` (nom `app_public_home`) & de la méthode `publicHome` ds `HomeController`
+* création du template `public_home/index.html.twig` pour l'accueil visiteur
+* ajout d'un bouton de connexion & du formulaire de saisie de ticket (sur cette page)
+* création de la classe de formulaire `TicketType.php` (champs: `auteurEmail`, `description`, `categorie`)
+* gestion de la soumission du formulaire ds `publicHome` pour enregistrer un new ticket
+* correction du "type" de date pour `setDateOuverture` (`DateTime` au lieu de `DateTimeImmutable`)
+* tests de soumission de ticket ok avec message de succès sur la page concernée
+
 
 
 

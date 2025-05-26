@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Bienvenue - Agence Web Support{% endblock %}
+
+{% block body %}
+<style>
+    .container-public { max-width: 800px; margin: 2em auto; padding: 20px; background-color: #fff; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+    .public-header { text-align: center; margin-bottom: 2em; }
+    .public-header h1 { color: #333; }
+    .public-header p { font-size: 1.1em; color: #666; }
+    .login-button-container { text-align: right; margin-bottom: 1.5em; }
+    .btn-login { padding: 10px 20px; background-color: #28a745; color: white; text-decoration: none; border-radius: 5px; }
+    .btn-login:hover { background-color: #218838; }
+    .ticket-form-container { margin-top: 2em; padding-top: 1.5em; border-top: 1px solid #eee; }
+    .ticket-form-container h2 { margin-bottom: 1em; color: #444; }
+    /* styles simples pour le formulaire, bootstrap fera mieux */
+    .form-group { margin-bottom: 1rem; }
+    .form-group label { display: block; margin-bottom: .5rem; font-weight: bold; }
+    .form-control { display: block; width: 95%; padding: .375rem .75rem; font-size: 1rem; line-height: 1.5; color: #495057; background-color: #fff; background-clip: padding-box; border: 1px solid #ced4da; border-radius: .25rem; transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out; }
+    .form-control:focus { border-color: #80bdff; outline: 0; box-shadow: 0 0 0 .2rem rgba(0,123,255,.25); }
+    textarea.form-control { min-height: 120px; }
+    .btn-submit-ticket { padding: 10px 20px; background-color: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 1em; }
+    .btn-submit-ticket:hover { background-color: #0056b3; }
+    .alert-success { color: #155724; background-color: #d4edda; border-color: #c3e6cb; padding: .75rem 1.25rem; margin-bottom: 1rem; border: 1px solid transparent; border-radius: .25rem; }
+</style>
+
+<div class="container-public">
+    <div class="login-button-container">
+        <a href="{{ path('app_login') }}" class="btn-login">Connexion Espace Agence</a>
+    </div>
+
+    <div class="public-header">
+        <h1>Support Client Agence Web</h1>
+        <p>Un problème, une question ? Soumettez-nous votre demande via le formulaire ci-dessous.</p>
+    </div>
+
+    {# affichage des messages flash (ex: succès de soumission) #}
+    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+            <div class="alert alert-{{ label }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endfor %}
+
+    <div class="ticket-form-container">
+        <h2>Soumettre un nouveau ticket</h2>
+        {# affichage du formulaire de ticket #}
+        {{ form_start(ticket_form) }}
+            {{ form_widget(ticket_form) }}
+            <button type="submit" class="btn-submit-ticket">Envoyer le Ticket</button>
+        {{ form_end(ticket_form) }}
+    </div>
+</div>
+{% endblock %}
