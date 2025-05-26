@@ -43,13 +43,10 @@ security:
         # ROLE_USER est donné à tous les utilisateurs authentifiés
         - { path: ^/home, roles: ROLE_USER }
 
-        # pages commençant par /admin
-        # pour le rôle ROLE_ADMIN
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-
-        # pages commençant par /personnel
-        # pour le rôle ROLE_PERSONNEL 
-        # - { path: ^/personnel, roles: ROLE_USER } 
+        # section des tickets nécessite d'être connecté (ROLE_USER)
+        # cela couvrira /ticket, /ticket/new, /ticket/{id}, etc...
+        - { path: ^/ticket, roles: PUBLIC_ACCESS }
+ 
 
 when@test:
     security:

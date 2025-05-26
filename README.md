@@ -58,6 +58,13 @@ Les commentaires ds le code se veulent simples & explicatifs, ds l'idée de part
 * correction du "type" de date pour `setDateOuverture` (`DateTime` au lieu de `DateTimeImmutable`)
 * tests de soumission de ticket ok avec message de succès sur la page concernée
 
+### Affichage liste des Tickets (Personnel/Admin)
+* création du `TicketController` avec la méthode `index` pour lister les tickets
+* création du template `ticket/index.html.twig` pour afficher les tickets
+* ajout de la route `/ticket` (nom `app_ticket_index`)
+* sécurisation de la route `/ticket` (nécessite `ROLE_USER`) via `security.yaml`
+* **correction de l'erreur `EntityNotFoundException` en vérifiant que les tickets ont un statut valide**
+* affichage de la liste des tickets fonctionnel
 
 
 

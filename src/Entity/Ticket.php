@@ -5,6 +5,8 @@ namespace App\Entity;
 use App\Repository\TicketRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\Statut;       
+use App\Entity\Utilisateur;  
 
 #[ORM\Entity(repositoryClass: TicketRepository::class)]
 class Ticket
@@ -29,6 +31,14 @@ class Ticket
     #[ORM\ManyToOne(inversedBy: 'tickets')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Categorie $categorie = null;
+
+    #[ORM\ManyToOne(inversedBy: 'tickets')] 
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Statut $statut = null;
+
+    #[ORM\ManyToOne(inversedBy: 'tickets')] 
+    #[ORM\JoinColumn(nullable: true)]
+    private ?Utilisateur $responsable = null;
 
     public function getId(): ?int
     {
@@ -91,6 +101,31 @@ class Ticket
     public function setCategorie(?Categorie $categorie): static
     {
         $this->categorie = $categorie;
+
+        return $this;
+    }
+
+    // Getters et Setters pour statut & responsable
+    public function getStatut(): ?Statut
+    {
+        return $this->statut;
+    }
+
+    public function setStatut(?Statut $statut): static
+    {
+        $this->statut = $statut;
+
+        return $this;
+    }
+
+    public function getResponsable(): ?Utilisateur
+    {
+        return $this->responsable;
+    }
+
+    public function setResponsable(?Utilisateur $responsable): static
+    {
+        $this->responsable = $responsable;
 
         return $this;
     }

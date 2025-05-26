@@ -2,11 +2,12 @@
 
 namespace App\Controller;
 
-use App\Entity\Ticket; // import entité ticket
-use App\Form\TicketType; // import formulaire tickettype
-use Doctrine\ORM\EntityManagerInterface; // pour sauvegarder dans bdd
+use App\Entity\Ticket;
+use App\Form\TicketType;
+use App\Entity\Statut; 
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request; // gestion requête du formulaire
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
@@ -32,13 +33,20 @@ class HomeController extends AbstractController
         $form->handleRequest($request); // le formulaire "écoute" la requête pour voir s'il a été soumis
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // forumulaire soumis & valide :
-            // date d'ouverture
-            $ticket->setDateOuverture(new \DateTime()); // j'ai changé pour DateTime
-            // $statutNouveau = $entityManager->getRepository(Statut::class)->findOneBy(['nom' => 'Nouveau']);
-            // if ($statutNouveau) {
-            //     $ticket->setStatut($statutNouveau);
-            // }
+            // forumulaire soumis & valide 
+
+            $statutNouveau = $entityManager->getRepository(Statut::class)->findOneBy(['nom' => 'Nouveau']);
+
+            if (!$statutNouveau) {
+                
+                $this->addFlash('error', 'Erreur critique : Le statut initial "Nouveau" est introuvable. Impossible de créer le ticket. Veuillez contacter l\'administrateur.');
+                // on redirige pour afficher le message d'erreur
+                return $this->redirectToRoute('app_public_home');
+            }
+
+            // assigne les valeurs si le statut est trouvé
+            $ticket->setDateOuverture(new \DateTime()); 
+            $ticket->setStatut($statutNouveau); 
 
             $entityManager->persist($ticket); // prépare la sauvegarde du ticket
             $entityManager->flush(); // exécute la sauvegarde dans bdd
@@ -49,7 +57,7 @@ class HomeController extends AbstractController
             return $this->redirectToRoute('app_public_home');
         }
 
-        // affiche le template de la page d'accueil publique
+        // affiche le template de la page d'accueil public
         // lui passe le formulaire pour qu'il puisse être affiché
         return $this->render('public_home/index.html.twig', [
             'ticket_form' => $form->createView(),
