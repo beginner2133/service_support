@@ -1,55 +1,99 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Bienvenue - Agence Web Support{% endblock %}
+{% block title %}Support Client - Agence Web{% endblock %}
 
 {% block body %}
 <style>
-    .container-public { max-width: 800px; margin: 2em auto; padding: 20px; background-color: #fff; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
-    .public-header { text-align: center; margin-bottom: 2em; }
-    .public-header h1 { color: #333; }
-    .public-header p { font-size: 1.1em; color: #666; }
-    .login-button-container { text-align: right; margin-bottom: 1.5em; }
-    .btn-login { padding: 10px 20px; background-color: #28a745; color: white; text-decoration: none; border-radius: 5px; }
-    .btn-login:hover { background-color: #218838; }
-    .ticket-form-container { margin-top: 2em; padding-top: 1.5em; border-top: 1px solid #eee; }
-    .ticket-form-container h2 { margin-bottom: 1em; color: #444; }
-    /* styles simples pour le formulaire, bootstrap fera mieux */
-    .form-group { margin-bottom: 1rem; }
-    .form-group label { display: block; margin-bottom: .5rem; font-weight: bold; }
-    .form-control { display: block; width: 95%; padding: .375rem .75rem; font-size: 1rem; line-height: 1.5; color: #495057; background-color: #fff; background-clip: padding-box; border: 1px solid #ced4da; border-radius: .25rem; transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out; }
-    .form-control:focus { border-color: #80bdff; outline: 0; box-shadow: 0 0 0 .2rem rgba(0,123,255,.25); }
-    textarea.form-control { min-height: 120px; }
-    .btn-submit-ticket { padding: 10px 20px; background-color: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 1em; }
-    .btn-submit-ticket:hover { background-color: #0056b3; }
-    .alert-success { color: #155724; background-color: #d4edda; border-color: #c3e6cb; padding: .75rem 1.25rem; margin-bottom: 1rem; border: 1px solid transparent; border-radius: .25rem; }
+    .public-page-container {
+        background-color: #f8f9fa; 
+        padding-top: 2rem;
+        padding-bottom: 3rem;
+        min-height: calc(100vh - 56px); 
+    }
+    .form-ticket-card {
+        background-color: #ffffff;
+        padding: 2rem;
+        border-radius: 0.5rem;
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+    }
+    .login-button-container {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        z-index: 10; 
+    }
+    
+    .btn-login-custom {
+        background-color: #198754; 
+        border-color: #198754;
+        color: white;
+    }
+    .btn-login-custom:hover {
+        background-color:rgb(18, 96, 60); 
+        border-color: #146c43;
+        color: white;
+    }
+    /* si le menu principal est affiché (utilisateur connecté), on cache le bouton de connexion */
+    .main-nav + .public-page-container .login-button-container {
+        display: none;
+    }
+
 </style>
 
-<div class="container-public">
-    <div class="login-button-container">
-        <a href="{{ path('app_login') }}" class="btn-login">Connexion Espace Agence</a>
-    </div>
-
-    <div class="public-header">
-        <h1>Support Client Agence Web</h1>
-        <p>Un problème, une question ? Soumettez-nous votre demande via le formulaire ci-dessous.</p>
-    </div>
-
-    {# affichage des messages flash (ex: succès de soumission) #}
-    {% for label, messages in app.flashes %}
-        {% for message in messages %}
-            <div class="alert alert-{{ label }}">
-                {{ message }}
+<div class="public-page-container">
+    <div class="container"> 
+        
+        {% if not app.user %}
+            <div class="login-button-container">
+                <a href="{{ path('app_login') }}" class="btn btn-outline-success">Connexion Espace Agence</a>
             </div>
-        {% endfor %}
-    {% endfor %}
+        {% endif %}
 
-    <div class="ticket-form-container">
-        <h2>Soumettre un nouveau ticket</h2>
-        {# affichage du formulaire de ticket #}
-        {{ form_start(ticket_form) }}
-            {{ form_widget(ticket_form) }}
-            <button type="submit" class="btn-submit-ticket">Envoyer le Ticket</button>
-        {{ form_end(ticket_form) }}
+        <div class="text-center mb-5">
+            <h1 class="display-5">Support Client Agence Web</h1>
+            <p class="lead text-muted">Un problème, une question ? Soumettez-nous votre demande via le formulaire ci-dessous.</p>
+        </div>
+
+        {% for label, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="alert alert-{{ label == 'error' ? 'danger' : label }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        {% endfor %}
+
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="form-ticket-card">
+                    <h2 class="mb-4 h4">Soumettre un nouveau ticket</h2>
+                    {{ form_start(ticket_form, {'attr': {'class': 'needs-validation', 'novalidate': ''}}) }}
+                        
+                        <div class="mb-3">
+                            {{ form_label(ticket_form.auteurEmail) }}
+                            {{ form_widget(ticket_form.auteurEmail, {'attr': {'class': 'form-control form-control-lg'}}) }}
+                            {# {{ form_errors(ticket_form.auteurEmail) }} #}
+                        </div>
+
+                        <div class="mb-3">
+                            {{ form_label(ticket_form.description) }}
+                            {{ form_widget(ticket_form.description, {'attr': {'class': 'form-control form-control-lg', 'rows': 5}}) }}
+                            {# {{ form_errors(ticket_form.description) }} #}
+                        </div>
+
+                        <div class="mb-3">
+                            {{ form_label(ticket_form.categorie) }}
+                            {{ form_widget(ticket_form.categorie, {'attr': {'class': 'form-select form-select-lg'}}) }}
+                            {# {{ form_errors(ticket_form.categorie) }} #}
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary btn-lg">{{ button_label|default('Envoyer le Ticket') }}</button>
+                        </div>
+                    {{ form_end(ticket_form) }}
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}

@@ -66,7 +66,12 @@ Les commentaires ds le code se veulent simples & explicatifs, ds l'idée de part
 * **correction de l'erreur `EntityNotFoundException` en vérifiant que les tickets ont un statut valide**
 * affichage de la liste des tickets fonctionnel
 
-
+### Amélioration Navigation & Interface Utilisateur (Bootstrap)
+* ajout de bootstrap 5 via cdn ds templates/base.html.twig
+* amélioration de la barre de navigation principale pour les utilisateurs connectés (style, police, couleur personnalisée, lien "voir site public")
+* ajout d'un lien "retour à l'accueil public / sortie" sur la page de connexion (login.html.twig)
+* harmonisation du style des pages existantes (login.html.twig, public_home/index.html.twig, home/index.html.twig, ticket/index.html.twig, ticket/show.html.twig) avec bootstrap & une classe .content-card commune
+* correction du style du bouton "connexion espace agence" pour la page public
 
 
 

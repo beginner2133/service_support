@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détail Ticket #{{ ticket.id }} - Service Support{% endblock %}
+
+{% block body %}
+
+<div class="content-card">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Détail du Ticket #{{ ticket.id }}</h1>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <h5 style="color: var(--bleu-majorelle);">Informations Générales</h5>
+            <dl class="row mt-3">
+                <dt class="col-sm-5">ID du Ticket :</dt>
+                <dd class="col-sm-7">{{ ticket.id }}</dd>
+
+                <dt class="col-sm-5">Auteur (Email) :</dt>
+                <dd class="col-sm-7">{{ ticket.auteurEmail }}</dd>
+
+                <dt class="col-sm-5">Date d'Ouverture :</dt>
+                <dd class="col-sm-7">{{ ticket.dateOuverture ? ticket.dateOuverture|date('d/m/Y à H:i:s') : 'Non définie' }}</dd>
+
+                <dt class="col-sm-5">Date de Clôture :</dt>
+                <dd class="col-sm-7">{{ ticket.dateCloture ? ticket.dateCloture|date('d/m/Y à H:i:s') : 'Ticket non clôturé' }}</dd>
+            </dl>
+        </div>
+        <div class="col-md-6">
+            <h5 style="color: var(--bleu-majorelle);">Classification & Suivi</h5>
+            <dl class="row mt-3">
+                <dt class="col-sm-5">Catégorie :</dt>
+                <dd class="col-sm-7">{{ ticket.categorie ? ticket.categorie.nom : 'Non définie' }}</dd>
+
+                <dt class="col-sm-5">Statut Actuel :</dt>
+                <dd class="col-sm-7">
+                    {% if ticket.statut %}
+                        {% set status_class = ticket.statut.nom|lower|replace({'é': 'e', ' ': '-'}) %}
+                        <span class="badge status-badge-{{ status_class }}">{{ ticket.statut.nom }}</span>
+                    {% else %}
+                        <span class="badge bg-secondary">N/A</span>
+                    {% endif %}
+                </dd>
+
+                <dt class="col-sm-5">Responsable Assigné :</dt>
+                <dd class="col-sm-7">{{ ticket.responsable ? ticket.responsable.nomComplet ~ ' (' ~ ticket.responsable.email ~ ')' : 'Aucun pour le moment' }}</dd>
+            </dl>
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <h5 style="color: var(--bleu-majorelle);">Description de la demande :</h5>
+        <div class="p-3 border bg-light rounded">
+            <p style="white-space: pre-wrap;">{{ ticket.description }}</p>
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <a href="{{ path('app_ticket_index') }}" class="btn btn-secondary">Retour à la liste</a>
+        {# On ajoutera un lien/bouton pour "Modifier le Statut" ici plus tard #}
+        {# {% if is_granted('ROLE_PERSONNEL') or is_granted('ROLE_ADMIN') %}
+            <a href="#" class="btn btn-primary ms-2" style="background-color: var(--bleu-majorelle); border-color: var(--bleu-majorelle);">Modifier le Statut</a>
+        {% endif %} #}
+    </div>
+</div>
+
+<style>
+    .status-badge-nouveau { background-color: var(--bs-primary); }
+    .status-badge-ouvert { background-color: var(--bs-warning); color: #000 !important; }
+    .status-badge-resolu { background-color: var(--bs-success); }
+    .status-badge-ferme { background-color: var(--bs-secondary); }
+</style>
+{% endblock %}
