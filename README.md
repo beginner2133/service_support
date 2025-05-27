@@ -1,77 +1,87 @@
 # Projet Symfony - Suivi de Tickets pour une Agence Web
 
-Système de Tickets avec support Clients pour une agence web 
-il s'agit ici d'un exercice avec le **framework Symfony**
+(IMPORTANT : lire le readme en mode "anglais" sur le dépôt GitHub)
 
-L'objectif est de développer une application web (en interne) pour une agence & ses salariés, permettant le suivi des tickets soumis par les clients (en front pour les clients). 
+Système de Tickets avec support Clients pour une agence web.
+Il s'agit ici d'un exercice avec le **framework Symfony**, réalisé en suivant les recommandations du support du cours "Les bases de Symfony" pour la création du projet
 
-le **contexte** est le suivi & la gestion du support clients, par le biais " des tickets que peuvent créer des clients".
-la **nature des Tickets** : les catégories prédéfinies & leur utilité : (il s'agit d'exemples que l'on peut trouver couramment)
+L'objectif est de développer une application web interne pour une agence & ses salariés, permettant le suivi de tickets soumis par les clients (partie front-office pour les clients)
 
-- "Incident" / "Panne" : un client signale que quelque chose ne fonctionne pas (ex: "mon site est inaccessible", "Le formulaire de contact ne s'affiche plus").
-- "Anomalie" : un bug, un comportement inattendu (ex: "l'affichage se fait mal sur mon mobile", "un calcul semble incorrect sur mon espace de suivi").
-- "Évolution" : une demande de modification (ex: améliorer l'ergonomie du site pour une meilleure navigation, "serait-il possible d'optimiser l'affichage des images pour un chargement plus rapide ?").
-- "Information" : une simple demande de renseignement (ex: "comment mettre à jour mon article ?", "quels sont vos tarifs pour... ?").
-il s'agit donc ici, des demandes via le support que les clients de l'agence web peuvent soumettre, & l'application permet à l'agence de centraliser ces demandes, de les assigner à un responsable, de suivre leur résolution, & de garder un historique, par exemple.
-C'est un outil de gestion de la relation client & de suivi de projets/tâches très courant.
+## Accès à l'Application
+
+### 1. Accès Public (pour les Clients/Visiteurs)
+* **URL Principale :** `https://127.0.0.1:8000/` (en environnement de développement local avec le serveur Symfony)
+* **Objectif :** permettre aux clients de soumettre un nouveau ticket de support via le formulaire via la page d'accueil
+* Un bouton "Connexion Espace Agence" est également disponible, redirigeant vers l'interface de connexion réservée au personnel de l'agence
+
+### 2. Accès Interne (pour le Personnel de l'Agence et l'Administrateur)
+* **URL de Connexion :** `https://127.0.0.1:8000/login`
+* **Identifiants pour le Correcteur (l'administrateur) :**
+    * mail : `admin@agence.correcteur.fr`
+    * Mp : `correcteur`
+* une fois connecté, l'utilisateur est redirigé vers l'accueil interne (`/home`) où un menu de navigation permet d'accéder aux différentes fonctionnalités
+
+
+Le **contexte** est le suivi & la gestion du support clients, par le biais de tickets que peuvent créer les clients
+La **nature des Tickets** :
+* "Incident" / "Panne" : signalement de dysfonctionnement (ex: "mon site est inaccessible", "Le formulaire de contact ne s'affiche plus")
+* "Anomalie" : bug ou comportement inattendu (ex: "l'affichage se fait mal sur mon mobile", "une information semble incorrect sur mon espace de suivi")
+* "Évolution" : demande d'amélioration (ex: "améliorer l'ergonomie du site pour une meilleure navigation")
+* "Information" : simple demande de renseignement
+L'application permet à l'agence de centraliser ces demandes, de les assigner, de suivre leur résolution & de garder un historique. C'est un outil courant de gestion & de suivi de la relation client
 
 ## Développement
 
-La mise en place du projet de configuration a présenté des problèmes techniques au début, & c'est pourquoi les premiers commits regroupent plusieurs étapes fondamentales pour le début de l'exercice.
+La phase initiale de mise en place du projet a présenté des défis techniques, notamment avec **Composer** pour l'installation de `doctrine/doctrine-fixtures-bundle` (la syntaxe exacte du nom du paquet était cruciale), & de ce fait, les premiers commits regroupent plusieurs étapes
 
-J'ai rencontré des difficultés dont voici un exemple : **Composer**, en particulier avec la syntaxe exacte du paquet **doctrine/doctrine-fixtures-bundle** (il fallait utiliser ce nom complet et non **doctrine/fixtures**), ce qui m'empêchait d'avancer.
+Ce fichier README sera mis à jour régulièrement en parallèle des commits pour détailler les étapes de développement. Les commentaires ds le code se veulent simples & explicatifs, ds l'idée de partager mon expérience d'apprentissage
 
-Suite à cette étape, le fichier README sera mis à jour régulièrement en même temps que les commits pour détailler  les étapes à venir.
-L'objectif est de proposer ici une visibilité sur la progression (logique) de ce projet
-Les commentaires ds le code se veulent simples & explicatifs, ds l'idée de partager mon expérience d'apprentissage.
+## Étapes Réalisées
 
-## ce qu'il faut faire
+### Initialisation & Structure de Base
+* création du projet symfony 6.4 `--webapp` pour une version complète 
+* configuration de la connexion à la bdd (mariadb), port 3307
+* création des entités : `Categorie`, `Statut`, `Utilisateur`, `Ticket` avec leurs propriétés
+* création & application des migrations pour créer le schéma de la bdd
 
-* Création du projet Symfony version 6.4 (en suivant le cours "Les bases de Symfony")
-* Configuration BDD
-* Création entités Categorie, Statut, Utilisateur, Ticket
-* Migrations pour schéma BDD
-* Installation doctrine/doctrine-fixtures-bundle
-* Ajout fixtures pour catégories & statuts
-* Création & première mise à jour du fichier README.md
-* Chargement des fixtures (catégories& statuts) en bd
+### Fixtures & Données Initiales
+* installation du paquet `doctrine/doctrine-fixtures-bundle` (après résolution des problèmes composer)
+* création de `AppFixtures.php` pour les données initiales
+* ajout des fixtures pour les `Categorie` ("Incident", "Panne", etc.) & les `Statut` ("Nouveau", "Ouvert", etc.). 
+* ajout de l'utilisateur `Administrateur` (mail:`admin@agence.correcteur.fr`, Mp: `correcteur`) avec Mp hashé
+* chargement de ttes les fixtures en bdd
+* création & mises à jour de ce `README.md`
 
-### fixture utilisateur administrateur
-* ajout de l'utilisateur administrateur (`admin@agence.correcteur.fr`) ds `AppFixtures.php`
-* utilisation de `UserPasswordHasherInterface` pour sécuriser le mp
-* chargement des fixtures (incluant l'admin) en bdd
-* mise à jour du `README.md`
+### Authentification & Accès Sécurisé
+* mise en place du système d'authentification (`make:auth`)
+* configuration des redirections après connexion (`AppAuthenticator.php`) & déconnexion (`security.yaml`)
+* création de `HomeController`& du template d'accueil interne (`home/index.html.twig`)
+* configuration du contrôle d'accès (`access_control` ds `security.yaml`) pour `/login`, `/home`
 
-### Système d'Authentification
-* mise en place du système d'authentification avec `make:auth`
-* configuration de la redirection après connexion ds `AppAuthenticator.php` vers `app_home`
-* création de `HomeController` & du template `home/index.html.twig` pour `app_home`
-* configuration de la redirection après déconnexion ds `security.yaml` vers `app_login`
-* tests connexion/déconnexion ok 
+### Fonctionnalités Public : création de Ticket
+* création de la page d'accueil public (`/`) pour les visiteurs
+* mise en place du formulaire de saisie de ticket (`TicketType.php`) avec les champs : `auteurEmail`, `description`, `categorie`
+* gestion de la soumission du formulaire & enregistrement des nouveaux tickets
+* assignation automatique du statut "Nouveau" & de la `dateOuverture` aux tickets créés
 
-### Page Public & Soumission du Ticket "client et/ou visiteur"
-* création de la route `/` (nom `app_public_home`) & de la méthode `publicHome` ds `HomeController`
-* création du template `public_home/index.html.twig` pour l'accueil visiteur
-* ajout d'un bouton de connexion & du formulaire de saisie de ticket (sur cette page)
-* création de la classe de formulaire `TicketType.php` (champs: `auteurEmail`, `description`, `categorie`)
-* gestion de la soumission du formulaire ds `publicHome` pour enregistrer un new ticket
-* correction du "type" de date pour `setDateOuverture` (`DateTime` au lieu de `DateTimeImmutable`)
-* tests de soumission de ticket ok avec message de succès sur la page concernée
+### Fonctionnalités internes : visualisation & gestion Tickets
+* création du `TicketController` pour lister (`index`) & afficher les détails (`show`) des tickets
+* création des templates correspondants (`ticket/index.html.twig`, `ticket/show.html.twig`)
+* sécurisation de la section `/ticket` (accessible aux utilisateurs connectés)
+* implémentation de la modification du statut d'un ticket par le personnel depuis la page qui affiche toutes les informations sur un ticket (`TicketStatusType.php`, méthode `editStatus` ds `TicketController`)
+* correction des erreurs & validation du fonctionnement
 
-### Affichage liste des Tickets (Personnel/Admin)
-* création du `TicketController` avec la méthode `index` pour lister les tickets
-* création du template `ticket/index.html.twig` pour afficher les tickets
-* ajout de la route `/ticket` (nom `app_ticket_index`)
-* sécurisation de la route `/ticket` (nécessite `ROLE_USER`) via `security.yaml`
-* **correction de l'erreur `EntityNotFoundException` en vérifiant que les tickets ont un statut valide**
-* affichage de la liste des tickets fonctionnel
+### Interface Utilisateur (Bootstrap) & CRUD Catégories (Admin)
+* **amélioration de l'interface utilisateur :**
+    * ajout de bootstrap 5 via cdn ds `templates/base.html.twig`
+    * amélioration de la barre de navigation principale (style, police, couleur, liens "voir site public", "gérer catégories" pour admin)
+    * ajout d'un lien "retour à l'accueil public" sur la page de connexion
+    * harmonisation du style des pages existantes avec bootstrap
+* **crud gestion des catégories (admin) :** 
+    * création du crud pour `Categorie` (`make:crud`)
+    * création `CategorieController.php`, `CategorieForm.php` & templates associés
+    * sécurisation des routes `/categorie` pour `ROLE_ADMIN`
+    * fonctionnalité crud catégories (créer, voir, modifier, supprimer) testée et opérationnelle
 
-### Amélioration Navigation & Interface Utilisateur (Bootstrap)
-* ajout de bootstrap 5 via cdn ds templates/base.html.twig
-* amélioration de la barre de navigation principale pour les utilisateurs connectés (style, police, couleur personnalisée, lien "voir site public")
-* ajout d'un lien "retour à l'accueil public / sortie" sur la page de connexion (login.html.twig)
-* harmonisation du style des pages existantes (login.html.twig, public_home/index.html.twig, home/index.html.twig, ticket/index.html.twig, ticket/show.html.twig) avec bootstrap & une classe .content-card commune
-* correction du style du bouton "connexion espace agence" pour la page public
-
-
-
+    Auteur
+    NP.

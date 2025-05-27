@@ -28,25 +28,22 @@ security:
                 path: /
                 #always_remember_me: true # "se souvenir de moi"
 
-            # activate different ways to authenticate
-            # https://symfony.com/doc/current/security.html#the-firewall
-
-            # https://symfony.com/doc/current/security/impersonating_user.html
-            # switch_user: true
-
     # contrôle d'accès pour les sections du site
+    # la première règle qui correspond est utilisée
     access_control:
-        # la page /login doit être accessible par tout le monde (même non connecté)
+        # page /login doit être accessible par tt le monde (même non connecté)
         - { path: ^/login, roles: PUBLIC_ACCESS }
 
-        # la page /home (accueil après connexion) nécessite d'être connecté (ROLE_USER)
-        # ROLE_USER est donné à tous les utilisateurs authentifiés
+        # pages de gestion des catégories (/categorie, /categorie/new, etc.)
+        # nécessitent le rôle ROLE_ADMIN
+        - { path: ^/categorie, roles: ROLE_ADMIN }
+
+        # page /home (accueil après connexion) nécessite d'être connecté (ROLE_USER)
+        # ROLE_USER est donné à ts les utilisateurs authentifiés
         - { path: ^/home, roles: ROLE_USER }
 
-        # section des tickets nécessite d'être connecté (ROLE_USER)
-        # cela couvrira /ticket, /ticket/new, /ticket/{id}, etc...
+        # section des tickets, accessible publiquement 
         - { path: ^/ticket, roles: PUBLIC_ACCESS }
- 
 
 when@test:
     security:
