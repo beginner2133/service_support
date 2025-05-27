@@ -107,6 +107,10 @@
                                 <li class="nav-item">
                                     <a class="nav-link {% if app.request.attributes.get('_route') starts with 'app_categorie_' %}active{% endif %}" href="{{ path('app_categorie_index') }}">Gérer Catégories</a>
                                 </li>
+                                {# lien pour status (admin uniquement) #}
+                                <li class="nav-item">
+                                    <a class="nav-link {% if app.request.attributes.get('_route') starts with 'app_statut_' %}active{% endif %}" href="{{ path('app_statut_index') }}">Gérer Statuts</a>
+                                </li>
                             {% endif %}
                             
                             <li class="nav-item">

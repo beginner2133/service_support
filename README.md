@@ -81,3 +81,4 @@ Ce README sera mis à jour en parallèle des commits Git pour documenter la prog
 * sécurisation des routes `/categorie` pour `ROLE_ADMIN` ds `security.yaml`
 * ajout du lien "gérer catégories" ds la barre de navigation pour l'admin
 * fonctionnalité crud catégories (créer, voir, modifier, supprimer) testée et opérationnelle
+* fonctionnalité crud statuts (créer, voir, modifier, supprimer) testée et opérationnelle

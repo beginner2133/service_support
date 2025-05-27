@@ -1,0 +1,12 @@
+{{ form_start(form, {'attr': {'class': 'needs-validation', 'novalidate': ''}}) }}
+    {{ form_errors(form) }}
+
+    <div class="mb-3">
+        {{ form_row(form.nom, {
+            'label': 'Nom du statut',
+            'attr': {'class': 'form-control form-control-lg', 'placeholder': 'Ex: En attente de validation'}
+        }) }}
+    </div>
+
+    <button class="btn btn-lg mt-3" style="background-color: var(--bleu-majorelle); border-color: var(--bleu-majorelle); color: white;">{{ button_label|default('Enregistrer') }}</button>
+{{ form_end(form) }}

@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion des Statuts{% endblock %}
+
+{% block body %}
+<div class="content-card">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Liste des Statuts</h1>
+        <a href="{{ path('app_statut_new') }}" class="btn btn-lg" style="background-color: var(--bleu-majorelle); border-color: var(--bleu-majorelle); color: white;">Créer un nouveau statut</a>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-striped table-hover table-bordered">
+            <thead class="table-light">
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Nom</th>
+                    <th scope="col" class="text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for statut in statuts %}
+                <tr>
+                    <td>{{ statut.id }}</td>
+                    <td>{{ statut.nom }}</td>
+                    <td class="text-center">
+                        <a href="{{ path('app_statut_show', {'id': statut.id}) }}" class="btn btn-sm btn-info">Voir</a>
+                        <a href="{{ path('app_statut_edit', {'id': statut.id}) }}" class="btn btn-sm btn-warning">Modifier</a>
+                        {{ include('statut/_delete_form.html.twig', {'button_label': 'Supprimer', 'button_class': 'btn btn-sm btn-danger'}) }}
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="3" class="text-center py-4">Aucun statut trouvé. Créez en un !</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

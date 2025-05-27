@@ -38,6 +38,9 @@ security:
         # nécessitent le rôle ROLE_ADMIN
         - { path: ^/categorie, roles: ROLE_ADMIN }
 
+        # pages de gestion des statuts 
+        - { path: ^/statut, roles: ROLE_ADMIN }
+
         # page /home (accueil après connexion) nécessite d'être connecté (ROLE_USER)
         # ROLE_USER est donné à ts les utilisateurs authentifiés
         - { path: ^/home, roles: ROLE_USER }
