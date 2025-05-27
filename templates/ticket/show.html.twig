@@ -3,11 +3,35 @@
 {% block title %}Détail Ticket #{{ ticket.id }} - Service Support{% endblock %}
 
 {% block body %}
+<style>
+    /* styles pour les badges de statut */
+    .status-badge-nouveau { background-color: var(--bs-primary); }
+    .status-badge-ouvert { background-color: var(--bs-warning); color: #000 !important; }
+    .status-badge-resolu { background-color: var(--bs-success); }
+    .status-badge-ferme { background-color: var(--bs-secondary); }
+    .form-errors ul { list-style-type: none; padding-left: 0; color: var(--bs-danger); }
+</style>
 
 <div class="content-card">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h1>Détail du Ticket #{{ ticket.id }}</h1>
     </div>
+
+    {# affichage des messages flash #}
+    {% for label, messages in app.flashes('success') %}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ messages|join('<br>')|raw }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {% endfor %}
+    {# affichage des erreurs flash si on en ajoute ds le contrôleur #}
+    {% for label, messages in app.flashes('error') %}
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            {{ messages|join('<br>')|raw }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {% endfor %}
+
 
     <div class="row">
         <div class="col-md-6">
@@ -55,19 +79,30 @@
         </div>
     </div>
 
+    {# formulaire pour modifier le statut #}
+    {% if is_granted('ROLE_USER') %}
+    <div class="status-form-container mt-4 pt-4 border-top">
+        <h3>Modifier le statut du ticket</h3>
+        {{ form_start(status_form) }}
+            {# affichage des erreurs du formulaire #}
+            {{ form_errors(status_form) }} 
+            <div class="row align-items-end">
+                <div class="col-md-8 col-lg-9 mb-2 mb-md-0">
+                    {{ form_row(status_form.statut, {'attr': {'class': 'form-select-lg'}}) }}
+                    {# form_row affiche normalement les erreurs du champ, mais on peut être explicite : #}
+                    {# {{ form_errors(status_form.statut) }} #}
+                </div>
+                <div class="col-md-4 col-lg-3">
+                    <button type="submit" class="btn btn-primary w-100 btn-lg" style="background-color: var(--bleu-majorelle); border-color: var(--bleu-majorelle);">Mettre à jour Statut</button>
+                </div>
+            </div>
+        {{ form_end(status_form) }}
+    </div>
+    {% endif %}
+
     <div class="mt-4">
         <a href="{{ path('app_ticket_index') }}" class="btn btn-secondary">Retour à la liste</a>
-        {# On ajoutera un lien/bouton pour "Modifier le Statut" ici plus tard #}
-        {# {% if is_granted('ROLE_PERSONNEL') or is_granted('ROLE_ADMIN') %}
-            <a href="#" class="btn btn-primary ms-2" style="background-color: var(--bleu-majorelle); border-color: var(--bleu-majorelle);">Modifier le Statut</a>
-        {% endif %} #}
     </div>
 </div>
 
-<style>
-    .status-badge-nouveau { background-color: var(--bs-primary); }
-    .status-badge-ouvert { background-color: var(--bs-warning); color: #000 !important; }
-    .status-badge-resolu { background-color: var(--bs-success); }
-    .status-badge-ferme { background-color: var(--bs-secondary); }
-</style>
 {% endblock %}

@@ -1,4 +1,5 @@
 # Projet Symfony - Suivi de Tickets pour une Agence Web
+Il faut regarder le dépôt GitHub en mode "anglais"
 
 Système de Tickets avec support Clients pour une agence web 
 il s'agit ici d'un exercice avec le **framework Symfony**
@@ -26,6 +27,7 @@ L'objectif est de proposer ici une visibilité sur la progression (logique) de c
 Les commentaires ds le code se veulent simples & explicatifs, ds l'idée de partager mon expérience d'apprentissage.
 
 ## ce qu'il faut faire
+### Étapes Réalisées
 
 * Création du projet Symfony version 6.4 (en suivant le cours "Les bases de Symfony")
 * Configuration BDD
@@ -70,8 +72,17 @@ Les commentaires ds le code se veulent simples & explicatifs, ds l'idée de part
 * ajout de bootstrap 5 via cdn ds templates/base.html.twig
 * amélioration de la barre de navigation principale pour les utilisateurs connectés (style, police, couleur personnalisée, lien "voir site public")
 * ajout d'un lien "retour à l'accueil public / sortie" sur la page de connexion (login.html.twig)
-* harmonisation du style des pages existantes (login.html.twig, public_home/index.html.twig, home/index.html.twig, ticket/index.html.twig, ticket/show.html.twig) avec bootstrap & une classe .content-card commune
+* harmonisation du style des pages existantes (login.html.twig, public_home/index.html.twig, home/index.html.twig, ticket/index.html.twig, ticket/show.html.twig) avec bootstrap & une classe content-card commune
 * correction du style du bouton "connexion espace agence" pour la page public
+
+### Modification Statut Ticket (Personnel/Admin)
+* création du formulaire TicketStatusType.php pour modifier le statut
+* ajout de la méthode "editStatus" ds TicketController.php pour traiter la modification
+* mise à jour de la méthode "show" ds TicketController.php pour créer & passer le formulaire TicketStatusType au template
+* ajout du formulaire de modification de statut ds templates/ticket/show.html.twig
+* affichage des erreurs de formulaire ds le template show.html.twig
+* correction de l'erreur de syntaxe twig "Unexpected token end of template"
+* fonctionnalité de modification du statut testée et fonctionnelle
 
 
 
