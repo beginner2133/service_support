@@ -77,23 +77,33 @@ Ce README sera mis à jour en parallèle des commits Git pour documenter la prog
 
 ### 7. CRUD Gestion des Catégories (Admin)
 * génération du CRUD pour `Categorie` avec `make:crud`
-* création `CategorieController.php`, `CategorieForm.php` (ou `CategorieType.php`) et templates associés dans `templates/categorie/`
+* création `CategorieController.php`, `CategorieForm.php` (ou `CategorieType.php`) 
 * sécurisation des routes `categorie` pour `ROLE_ADMIN` ds `security.yaml`
 * ajout du lien "gérer catégories" ds la barre de navigation pour l'admin
 * fonctionnalité CRUD catégories (créer, voir, modifier, supprimer) testée et opérationnelle
 
 ### 8. CRUD Gestion des Statuts (Admin) 
 * génération du CRUD pour l'entité `Statut` avec `make:crud`
-* création `StatutController.php`, `StatutForm.php` et templates associés dans `templates/statut/`
+* création `StatutController.php`, `StatutForm.php` 
 * sécurisation des routes `statut` pour `ROLE_ADMIN` ds `security.yaml`
 * ajout du lien "gérer statuts" ds la barre de navigation pour l'admin
 * fonctionnalité CRUD statuts (créer, voir, modifier, supprimer) testée et opérationnelle
 
 ### 9. CRUD Gestion des Utilisateurs (Admin)
 * génération du CRUD pour l'entité `Utilisateur` avec `make:crud`
-* création `StatutController.php`, `StatutForm.php` et templates associés
+* création `StatutController.php`, `StatutForm.php` 
 * sécurisation des routes `utilisateur` pour `ROLE_ADMIN` ds `security.yaml`
 * ajout du lien "gérer utilisateurs" ds la barre de navigation pour l'admin
 * adaptation du formulaire `UtilisateurForm.php` pour gérer le champ plainPassword (non mappé, répété) et l'option is_new
 * adaptation de `UtilisateurController.php` pour injecter *UserPasswordHasherInterface* et gérer le hashage du mot de passe à la création et à la modification
 * fonctionnalité CRUD utilisateurs (créer, voir, modifier, supprimer - avec gestion du mot de passe) testée et opérationnelle
+
+### 10. CRUD Gestion des Tickets (Admin) 
+* génération du CRUD pour l'entité `Ticket` avec `make:crud`
+* création `AdminTicketController.php`, `TicketForm.php` 
+* sécurisation des routes `/admin/ticket` pour `ROLE_ADMIN` ds `security.yaml`
+* ajout du lien "gérer tickets (admin)" ds la barre de navigation
+* adaptation du formulaire `TicketForm.php` pour inclure les champs (auteur, description, catégorie, statut, responsable, dateOuverture, dateCloture) et l'option is_new_ticket_admin
+* adaptation de `AdminTicketController.php` pour gérer la création, dateOuverture auto si non fournie et la modification, gestion dateCloture si statut "Fermé"
+
+

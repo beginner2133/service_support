@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion des Tickets (Admin){% endblock %}
+
+{% block body %}
+<div class="content-card">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Gestion des Tickets</h1>
+        <a href="{{ path('app_admin_ticket_new') }}" class="btn btn-lg" style="background-color: var(--bleu-majorelle); border-color: var(--bleu-majorelle); color: white;">Créer un nouveau ticket</a>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-striped table-hover table-bordered">
+            <thead class="table-light">
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Auteur (Email)</th>
+                    <th scope="col">Catégorie</th>
+                    <th scope="col">Statut</th>
+                    <th scope="col">Date Ouverture</th>
+                    <th scope="col">Description (extrait)</th>
+                    <th scope="col" class="text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for ticket in tickets %}
+                <tr>
+                    <td>{{ ticket.id }}</td>
+                    <td>{{ ticket.auteurEmail }}</td>
+                    <td>{{ ticket.categorie ? ticket.categorie.nom : 'N/A' }}</td>
+                    <td>
+                        {% if ticket.statut %}
+                            {% set status_class = ticket.statut.nom|lower|replace({'é': 'e', ' ': '-'}) %}
+                            <span class="badge status-badge-{{ status_class }}">{{ ticket.statut.nom }}</span>
+                        {% else %}
+                            <span class="badge bg-secondary">N/A</span>
+                        {% endif %}
+                    </td>
+                    <td>{{ ticket.dateOuverture ? ticket.dateOuverture|date('d/m/Y H:i') : '' }}</td>
+                    <td title="{{ ticket.description }}">
+                        {{ ticket.description|slice(0, 40) }}{% if ticket.description|length > 40 %}...{% endif %}
+                    </td>
+                    <td class="text-center">
+                        <a href="{{ path('app_admin_ticket_show', {'id': ticket.id}) }}" class="btn btn-sm btn-info">Voir</a>
+                        <a href="{{ path('app_admin_ticket_edit', {'id': ticket.id}) }}" class="btn btn-sm btn-warning">Modifier</a>
+                        {{ include('admin_ticket/_delete_form.html.twig', {'button_label': 'Suppr.', 'button_class': 'btn btn-sm btn-danger'}) }}
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="7" class="text-center py-4">Aucun ticket trouvé.</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<style>
+    .status-badge-nouveau { background-color: var(--bs-primary); }
+    .status-badge-ouvert { background-color: var(--bs-warning); color: #000 !important; }
+    .status-badge-resolu { background-color: var(--bs-success); }
+    .status-badge-ferme { background-color: var(--bs-secondary); }
+</style>
+{% endblock %}

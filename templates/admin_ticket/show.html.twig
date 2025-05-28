@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détail Ticket #{{ ticket.id }} (Admin){% endblock %}
+
+{% block body %}
+<div class="content-card">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Info Ticket #{{ ticket.id }}</h1>
+        <a href="{{ path('app_admin_ticket_edit', {'id': ticket.id}) }}" class="btn btn-lg btn-warning">Modifier ce ticket</a>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <h5 style="color: var(--bleu-majorelle);">Informations Générales</h5>
+            <dl class="row mt-3">
+                <dt class="col-sm-4">ID :</dt><dd class="col-sm-8">{{ ticket.id }}</dd>
+                <dt class="col-sm-4">Auteur (Email) :</dt><dd class="col-sm-8">{{ ticket.auteurEmail }}</dd>
+                <dt class="col-sm-4">Date Ouverture :</dt><dd class="col-sm-8">{{ ticket.dateOuverture ? ticket.dateOuverture|date('d/m/Y à H:i:s') : 'N/A' }}</dd>
+                <dt class="col-sm-4">Date Clôture :</dt><dd class="col-sm-8">{{ ticket.dateCloture ? ticket.dateCloture|date('d/m/Y à H:i:s') : 'Non clôturé' }}</dd>
+            </dl>
+        </div>
+        <div class="col-md-6">
+            <h5 style="color: var(--bleu-majorelle);">Classification & Suivi</h5>
+            <dl class="row mt-3">
+                <dt class="col-sm-4">Catégorie :</dt><dd class="col-sm-8">{{ ticket.categorie ? ticket.categorie.nom : 'N/A' }}</dd>
+                <dt class="col-sm-4">Statut :</dt>
+                <dd class="col-sm-8">
+                    {% if ticket.statut %}
+                        {% set status_class = ticket.statut.nom|lower|replace({'é': 'e', ' ': '-'}) %}
+                        <span class="badge status-badge-{{ status_class }}">{{ ticket.statut.nom }}</span>
+                    {% else %}
+                        <span class="badge bg-secondary">N/A</span>
+                    {% endif %}
+                </dd>
+                <dt class="col-sm-4">Responsable :</dt><dd class="col-sm-8">{{ ticket.responsable ? ticket.responsable.nomComplet ~ ' (' ~ ticket.responsable.email ~ ')' : 'Non assigné' }}</dd>
+            </dl>
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <h5 style="color: var(--bleu-majorelle);">Description :</h5>
+        <div class="p-3 border bg-light rounded">
+            <p style="white-space: pre-wrap;">{{ ticket.description|nl2br }}</p> {# nl2br pour convertir les sauts de ligne en <br> #}
+        </div>
+    </div>
+
+    <div class="mt-4 d-flex justify-content-between">
+        <a href="{{ path('app_admin_ticket_index') }}" class="btn btn-secondary">Retour à la liste</a>
+        {{ include('admin_ticket/_delete_form.html.twig', {'button_label': 'Supprimer ce ticket', 'button_class': 'btn btn-danger'}) }}
+    </div>
+</div>
+
+<style>
+    .status-badge-nouveau { background-color: var(--bs-primary); }
+    .status-badge-ouvert { background-color: var(--bs-warning); color: #000 !important; }
+    .status-badge-resolu { background-color: var(--bs-success); }
+    .status-badge-ferme { background-color: var(--bs-secondary); }
+</style>
+{% endblock %}

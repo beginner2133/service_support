@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Créer un Nouveau Ticket (Admin){% endblock %}
+
+{% block body %}
+<div class="content-card">
+    <h1>Créer un Nouveau Ticket</h1>
+
+    {{ include('admin_ticket/_form.html.twig', {'button_label': 'Créer le ticket'}) }}
+
+    <a href="{{ path('app_admin_ticket_index') }}" class="btn btn-link mt-3">Retour à la liste des tickets</a>
+</div>
+{% endblock %}

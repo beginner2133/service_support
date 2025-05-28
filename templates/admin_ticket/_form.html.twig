@@ -1,0 +1,38 @@
+
+{{ form_start(form, {'attr': {'class': 'needs-validation', 'novalidate': ''}}) }}
+    {{ form_errors(form) }}
+
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            {{ form_row(form.auteurEmail, {'label': 'Email de l\'auteur', 'attr': {'class': 'form-control-lg'}}) }}
+        </div>
+        <div class="col-md-6 mb-3">
+            {{ form_row(form.categorie, {'label': 'Catégorie', 'attr': {'class': 'form-select-lg'}}) }}
+        </div>
+    </div>
+
+    <div class="mb-3">
+        {{ form_row(form.description, {'label': 'Description détaillée', 'attr': {'rows': 5, 'class': 'form-control-lg'}}) }}
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            {{ form_row(form.statut, {'label': 'Statut', 'attr': {'class': 'form-select-lg'}}) }}
+        </div>
+        <div class="col-md-6 mb-3">
+            {{ form_row(form.responsable, {'label': 'Assigner à (Responsable)', 'required': false, 'attr': {'class': 'form-select-lg'}}) }}
+        </div>
+    </div>
+    
+     <div class="row">
+        <div class="col-md-6 mb-3">
+            {{ form_row(form.dateOuverture, {'label': 'Date d\'ouverture', 'widget': 'single_text', 'attr': {'class': 'form-control-lg'}}) }}
+        </div>
+        <div class="col-md-6 mb-3">
+            {{ form_row(form.dateCloture, {'label': 'Date de clôture', 'widget': 'single_text', 'required': false, 'attr': {'class': 'form-control-lg'}}) }}
+        </div>
+    </div> 
+
+
+    <button class="btn btn-lg mt-3" style="background-color: var(--bleu-majorelle); border-color: var(--bleu-majorelle); color: white;">{{ button_label|default('Enregistrer') }}</button>
+{{ form_end(form) }}

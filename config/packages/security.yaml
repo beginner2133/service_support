@@ -34,6 +34,9 @@ security:
         # page /login doit être accessible par tt le monde (même non connecté)
         - { path: ^/login, roles: PUBLIC_ACCESS }
 
+         # gestion des tickets par l'admin
+        - { path: ^/admin/ticket, roles: ROLE_ADMIN }
+
           # gestion des utilisateurs réservée à l'admin
         - { path: ^/utilisateur, roles: ROLE_ADMIN }
 
