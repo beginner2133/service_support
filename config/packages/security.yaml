@@ -34,6 +34,9 @@ security:
         # page /login doit être accessible par tt le monde (même non connecté)
         - { path: ^/login, roles: PUBLIC_ACCESS }
 
+          # gestion des utilisateurs réservée à l'admin
+        - { path: ^/utilisateur, roles: ROLE_ADMIN }
+
         # pages de gestion des catégories (/categorie, /categorie/new, etc.)
         # nécessitent le rôle ROLE_ADMIN
         - { path: ^/categorie, roles: ROLE_ADMIN }

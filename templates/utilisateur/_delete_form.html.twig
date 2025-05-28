@@ -1,0 +1,6 @@
+<form method="post" action="{{ path('app_utilisateur_delete', {'id': utilisateur.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce statut ?');" style="display: inline-block;">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ utilisateur.id) }}">
+    <button class="{{ button_class|default('btn btn-danger btn-sm') }}">{{ button_label|default('Supprimer') }}</button>
+</form>
+
+

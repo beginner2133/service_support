@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion des Utilisateurs{% endblock %}
+
+{% block body %}
+<div class="content-card">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Liste des Utilisateurs</h1>
+        <a href="{{ path('app_utilisateur_new') }}" class="btn btn-lg" style="background-color: var(--bleu-majorelle); border-color: var(--bleu-majorelle); color: white;">Créer un nouvel utilisateur</a>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-striped table-hover table-bordered">
+            <thead class="table-light">
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Nom Complet</th>
+                    <th scope="col">Rôles</th>
+                    <th scope="col" class="text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for utilisateur in utilisateurs %}
+                <tr>
+                    <td>{{ utilisateur.id }}</td>
+                    <td>{{ utilisateur.email }}</td>
+                    <td>{{ utilisateur.nomComplet|default('N/A') }}</td>
+                    <td>
+                        {% for role in utilisateur.roles %}
+                            {% if role == 'ROLE_ADMIN' %}
+                                <span class="badge bg-danger">Administrateur</span>
+                            {% elseif role == 'ROLE_PERSONNEL' %}
+                                <span class="badge bg-info text-dark">Personnel</span>
+                            {% elseif role == 'ROLE_USER' %}
+                               
+                                {% if utilisateur.roles|length == 1 %}
+                                    <span class="badge bg-secondary">Utilisateur</span>
+                                {% endif %}
+                            {% else %}
+                                <span class="badge bg-light text-dark">{{ role }}</span>
+                            {% endif %}
+                        {% else %}
+                            N/A
+                        {% endfor %}
+                    </td>
+                    <td class="text-center">
+                        <a href="{{ path('app_utilisateur_show', {'id': utilisateur.id}) }}" class="btn btn-sm btn-info">Voir</a>
+                        <a href="{{ path('app_utilisateur_edit', {'id': utilisateur.id}) }}" class="btn btn-sm btn-warning">Modifier</a>
+                        {# Le formulaire de suppression est ici #}
+                        {{ include('utilisateur/_delete_form.html.twig', {'button_label': 'Supprimer', 'button_class': 'btn btn-sm btn-danger'}) }}
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="5" class="text-center py-4">Aucun utilisateur trouvé.</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

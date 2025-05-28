@@ -64,7 +64,7 @@ Ce README sera mis à jour en parallèle des commits Git pour documenter la prog
 ### 5. Fonctionnalités Internes (Tickets : Liste, Détail, Modification Statut)
 * création du `TicketController` pour lister (`/ticket`) et afficher les détails (`/ticket/{id}`)
 * création des templates `ticket/index.html.twig` et `ticket/show.html.twig`
-* sécurisation de la section `/ticket` (accessible initialement en `PUBLIC_ACCESS` pour tests, puis ajusté à `ROLE_USER`)
+* sécurisation de la section `ticket` (accessible initialement en `PUBLIC_ACCESS` pour tests, puis ajusté à `ROLE_USER`)
 * création du formulaire `TicketStatusType.php` pour la modification du statut
 * implémentation de la logique de modification du statut dans `TicketController` et le template `show.html.twig`
 * fonctionnalités testées et opérationnelles
@@ -76,9 +76,24 @@ Ce README sera mis à jour en parallèle des commits Git pour documenter la prog
 * harmonisation du style des pages existantes avec bootstrap
 
 ### 7. CRUD Gestion des Catégories (Admin)
-* génération du crud pour `Categorie` avec `make:crud`
+* génération du CRUD pour `Categorie` avec `make:crud`
 * création `CategorieController.php`, `CategorieForm.php` (ou `CategorieType.php`) et templates associés dans `templates/categorie/`
-* sécurisation des routes `/categorie` pour `ROLE_ADMIN` ds `security.yaml`
+* sécurisation des routes `categorie` pour `ROLE_ADMIN` ds `security.yaml`
 * ajout du lien "gérer catégories" ds la barre de navigation pour l'admin
-* fonctionnalité crud catégories (créer, voir, modifier, supprimer) testée et opérationnelle
-* fonctionnalité crud statuts (créer, voir, modifier, supprimer) testée et opérationnelle
+* fonctionnalité CRUD catégories (créer, voir, modifier, supprimer) testée et opérationnelle
+
+### 8. CRUD Gestion des Statuts (Admin) 
+* génération du CRUD pour l'entité `Statut` avec `make:crud`
+* création `StatutController.php`, `StatutForm.php` et templates associés dans `templates/statut/`
+* sécurisation des routes `statut` pour `ROLE_ADMIN` ds `security.yaml`
+* ajout du lien "gérer statuts" ds la barre de navigation pour l'admin
+* fonctionnalité CRUD statuts (créer, voir, modifier, supprimer) testée et opérationnelle
+
+### 9. CRUD Gestion des Utilisateurs (Admin)
+* génération du CRUD pour l'entité `Utilisateur` avec `make:crud`
+* création `StatutController.php`, `StatutForm.php` et templates associés
+* sécurisation des routes `utilisateur` pour `ROLE_ADMIN` ds `security.yaml`
+* ajout du lien "gérer utilisateurs" ds la barre de navigation pour l'admin
+* adaptation du formulaire `UtilisateurForm.php` pour gérer le champ plainPassword (non mappé, répété) et l'option is_new
+* adaptation de `UtilisateurController.php` pour injecter *UserPasswordHasherInterface* et gérer le hashage du mot de passe à la création et à la modification
+* fonctionnalité CRUD utilisateurs (créer, voir, modifier, supprimer - avec gestion du mot de passe) testée et opérationnelle
