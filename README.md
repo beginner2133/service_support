@@ -2,12 +2,12 @@
 
 Application de suivi de tickets clients pour une agence web, réalisée avec le **framework Symfony 6.4**
 
-L'objectif est de développer une application interne permettant au personnel de l'agence de gérer les demandes (tickets) soumises par les clients via un formulaire de service au client
+Il s'agit de développer une application interne permettant au personnel de l'agence de gérer les demandes (tickets) soumises par les clients via un formulaire de service au client
 
 ## Accès à l'Application
 
 ### 1. Accès Public (Clients/Visiteurs)
-* **URL Principale :** `https://127.0.0.1:8000/` (en développement local)
+* **URL Principale :** `https://127.0.0.1:8000/` 
 * **Fonctionnalité :** permet aux clients de soumettre un nouveau ticket de support
 * un bouton "Connexion Espace Agence" redirige vers l'interface de connexion du personnel
 
@@ -20,19 +20,17 @@ L'objectif est de développer une application interne permettant au personnel de
 
 ## Contexte et Objectifs
 
-L'application centralise les demandes de support client (tickets) pour une gestion efficace
+L'application centralise les demandes de support client (tickets) pour répondre & gérer les difficultés des clients de l'agence - outil de gestion de la relation client et de suivi de tâches
 
 * **Incident / Panne :** signalement de dysfonctionnements
 * **Anomalie :** bugs ou comportements inattendus
 * **Évolution :** demandes de modifications 
 * **Information :** imples demandes de renseignements
 
-C'est un outil de gestion de la relation client et de suivi de tâches
-
 ## Journal de Développement et Commits
 
-La mise en place initiale du projet a nécessité de résoudre certains défis techniques, notamment avec la configuration de l'environnement et l'utilisation de Composer pour des paquets spécifiques comme `doctrine/doctrine-fixtures-bundle`.
-Ce README sera mis à jour en parallèle des commits Git pour documenter la progression et les fonctionnalités implémentées.
+La mise en place initiale du projet a nécessité de résoudre plusieurs défis techniques, notamment avec la configuration de l'environnement et l'utilisation de Composer pour des paquets spécifiques comme `doctrine/doctrine-fixtures-bundle`
+Ce README sera mis à jour en parallèle des commits Git pour documenter la progression et les fonctionnalités implémentées
 
 ## Étapes Réalisées 
 

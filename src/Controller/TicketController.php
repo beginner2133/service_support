@@ -3,18 +3,18 @@
 namespace App\Controller;
 
 use App\Entity\Ticket;
-use App\Form\TicketStatusType; // pour le formulaire de statut
+use App\Form\TicketStatusType; 
 use App\Repository\TicketRepository;
-use Doctrine\ORM\EntityManagerInterface; // pour sauvegarder les changements
+use Doctrine\ORM\EntityManagerInterface; 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request; // pour gérer la requête du formulaire
+use Symfony\Component\HttpFoundation\Request; 
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/ticket')] // préfixe pour ttes les routes de controller
+#[Route('/ticket')] 
 class TicketController extends AbstractController
 {
-    #[Route('/', name: 'app_ticket_index', methods: ['GET'])] // page liste des tickets
+    #[Route('/', name: 'app_ticket_index', methods: ['GET'])] 
     public function index(TicketRepository $ticketRepository): Response
     {
         $tickets = $ticketRepository->findBy([], ['dateOuverture' => 'DESC']);
@@ -36,7 +36,7 @@ class TicketController extends AbstractController
             // si le formulaire est soumis & valide, on enregistre
             $entityManager->flush(); // pas besoin de persist(), le ticket est déjà suivi par doctrine
 
-            $this->addFlash('success', 'le statut du ticket #' . $ticket->getId() . ' a bien été mis à jour.');
+            $this->addFlash('success', 'le ticket #' . $ticket->getId() . ' a bien été mis à jour.');
 
             // redirection vers la page de détail du ticket
             return $this->redirectToRoute('app_ticket_show', ['id' => $ticket->getId()], Response::HTTP_SEE_OTHER);
@@ -54,12 +54,12 @@ class TicketController extends AbstractController
         // l'action du formulaire pointera vers la route 'app_ticket_edit_status'
         $statusForm = $this->createForm(TicketStatusType::class, $ticket, [
             'action' => $this->generateUrl('app_ticket_edit_status', ['id' => $ticket->getId()]),
-            'method' => 'POST', // le formulaire sera soumis en POST
+            'method' => 'POST', // le formulaire soumis en POST
         ]);
 
         return $this->render('ticket/show.html.twig', [
             'ticket' => $ticket,
-            'status_form' => $statusForm->createView(), // on passe le formulaire au template
+            'status_form' => $statusForm->createView(), 
         ]);
     }
 }

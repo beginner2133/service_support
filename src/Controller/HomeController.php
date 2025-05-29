@@ -49,7 +49,7 @@ class HomeController extends AbstractController
             $entityManager->persist($ticket); // prépare la sauvegarde du ticket
             $entityManager->flush(); // exécute la sauvegarde dans bdd
 
-            $this->addFlash('success', 'Votre ticket a bien été soumis ! Nous vous contacterons bientôt.');
+            $this->addFlash('success', 'Votre ticket a bien été soumis ! Nous vous répondrons sous 48 heures');
 
             // redirection pour éviter de resoumettre le formulaire si l'utilisateur rafraîchit la page
             return $this->redirectToRoute('app_public_home');

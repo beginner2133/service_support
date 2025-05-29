@@ -20,7 +20,7 @@ class AppAuthenticator extends AbstractLoginFormAuthenticator
 {
     use TargetPathTrait;
 
-    public const LOGIN_ROUTE = 'app_login'; // ici la route pour la page de connexion
+    public const LOGIN_ROUTE = 'app_login'; // page de connexion
 
     private UrlGeneratorInterface $urlGenerator;
 
@@ -40,7 +40,7 @@ class AppAuthenticator extends AbstractLoginFormAuthenticator
             new PasswordCredentials($request->getPayload()->getString('password')),
             [
                 new CsrfTokenBadge('authenticate', $request->getPayload()->getString('_csrf_token')),
-                new RememberMeBadge(), // gestion du "se souvenir de moi"
+                new RememberMeBadge(), // "se souvenir de moi"
             ]
         );
     }

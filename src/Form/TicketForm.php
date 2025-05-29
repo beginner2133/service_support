@@ -44,7 +44,7 @@ class TicketForm extends AbstractType
             ->add('responsable', EntityType::class, [
                 'class' => Utilisateur::class,
                 'choice_label' => 'email', 
-                'label' => 'Responsable assigné',
+                'label' => 'Responsable',
                 'placeholder' => 'Aucun responsable',
                 'required' => false, 
                 'attr' => ['class' => 'form-select-lg']

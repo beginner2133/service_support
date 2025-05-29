@@ -23,7 +23,7 @@ security:
                 target: app_login # redirection vers la page de connexion après déconnexion
 
             remember_me: # "se souvenir de moi"
-                secret: '%kernel.secret%' # clé secrète pour la sécurité
+                secret: '%kernel.secret%' # clé secrète 
                 lifetime: 604800 # durée de validité 
                 path: /
                 #always_remember_me: true # "se souvenir de moi"
