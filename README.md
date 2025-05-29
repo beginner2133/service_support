@@ -106,4 +106,8 @@ Ce README sera mis à jour en parallèle des commits Git pour documenter la prog
 * adaptation du formulaire `TicketForm.php` pour inclure les champs (auteur, description, catégorie, statut, responsable, dateOuverture, dateCloture) et l'option is_new_ticket_admin
 * adaptation de `AdminTicketController.php` pour gérer la création, dateOuverture auto si non fournie et la modification, gestion dateCloture si statut "Fermé"
 
-
+### 11. Validation des Données
+* ajout des contraintes de validation (Asserts) sur l'entité Ticket pour les champs auteurEmail (NotBlank, Email) et description (NotBlank, Length min:20, max:250)
+* ajout de contraintes NotNull sur les relations categorie et statut dans l'entité Ticket
+* vérification de l'affichage des messages d'erreur de validation dans les formulaires
+* validation back-end fonctionnelle

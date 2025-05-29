@@ -45,8 +45,8 @@
     </table>
 
     <div class="mt-4">
-        <a href="{{ path('app_utilisateur_index') }}" class="btn btn-secondary">Retour à la liste</a>
-        <a href="{{ path('app_utilisateur_edit', {'id': utilisateur.id}) }}" class="btn btn-warning ms-2">Modifier</a>
+        <a href="{{ path('app_admin_utilisateur_index') }}" class="btn btn-secondary">Retour à la liste</a>
+        <a href="{{ path('app_admin_utilisateur_edit', {'id': utilisateur.id}) }}" class="btn btn-warning ms-2">Modifier</a>
         <div style="display: inline-block;" class="ms-2">
              {{ include('utilisateur/_delete_form.html.twig', {'button_label': 'Supprimer cet utilisateur', 'button_class': 'btn btn-danger'}) }}
         </div>

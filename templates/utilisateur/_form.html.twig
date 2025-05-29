@@ -1,87 +1,55 @@
+{{ form_start(form, {'attr': {'class': 'needs-validation', 'novalidate': ''}}) }}
+    <div class="my-3">
+        {{ form_errors(form) }}
+    </div>
 
-<?php
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            {{ form_row(form.email, {
+                'label': 'Adresse e-mail',
+                'label_attr': {'class': 'form-label'},
+                'attr': {'class': 'form-control form-control-lg'}
+            }) }}
+        </div>
+        <div class="col-md-6 mb-3">
+            {{ form_row(form.nom_complet, {
+                'label': 'Nom complet (optionnel)',
+                'label_attr': {'class': 'form-label'},
+                'attr': {'class': 'form-control form-control-lg'}
+            }) }}
+        </div>
+    </div>
 
-namespace App\Form;
+    <div class="mb-4">
+        {{ form_row(form.roles, {
+            'label': 'Rôles de l\'utilisateur', 
+            'label_attr': {'class': 'form-label fw-bold'}
+        }) }}
+    </div>
+    
+    <fieldset class="mb-3 p-3 border rounded">
+        <legend class="w-auto px-2 h5" style="color: var(--bleu-majorelle);">Mot de passe</legend>
+        {% if form.vars.data.id is not null and (form.plainPassword.first.vars.data is empty or form.plainPassword.first.vars.data is null) and (form.plainPassword.second.vars.data is empty or form.plainPassword.second.vars.data is null) %}
+            <p class="form-text text-muted small">Laissez les champs "Mot de passe" vides si vous ne souhaitez pas le modifier.</p>
+        {% elseif form.vars.data.id is null %}
+             <p class="form-text text-muted small">Le mot de passe est requis pour un nouvel utilisateur (minimum 6 caractères).</p>
+        {% endif %}
+        
+        <div class="mb-3">
+            {{ form_row(form.plainPassword.first, {
+                'label': 'Mot de passe' ~ (form.vars.data.id is null ? '' : ' (laisser vide pour ne pas changer)'),
+                'label_attr': {'class': 'form-label'},
+                'attr': {'class': 'form-control-lg'}
+            }) }}
+        </div>
+        <div class="mb-3">
+            {{ form_row(form.plainPassword.second, {
+                'label': 'Répéter le mot de passe',
+                'label_attr': {'class': 'form-label'},
+                'attr': {'class': 'form-control-lg'}
+            }) }}
+        </div>
+    </fieldset>
 
-use App\Entity\Utilisateur;
-use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType; // champ booléen
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
-use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\Length;
-use Symfony\Component\Validator\Constraints\NotBlank;
-
-class UtilisateurFormType extends AbstractType 
-{
-    public function buildForm(FormBuilderInterface $builder, array $options): void
-    {
-        $builder
-            ->add('email', EmailType::class, [
-                'label' => 'adresse e-mail',
-                'attr' => ['class' => 'form-control-lg'] // champ + grand
-            ])
-            ->add('nom_complet', TextType::class, [
-                'label' => 'nom complet',
-                'required' => false, 
-                'attr' => ['class' => 'form-control-lg']
-            ])
-            ->add('roles', ChoiceType::class, [
-                'label' => 'rôles',
-                'choices' => [
-                    'personnel' => 'ROLE_PERSONNEL',
-                    'administrateur' => 'ROLE_ADMIN',
-                ],
-                'multiple' => true, // permet de sélectionner plusieurs rôles
-                'expanded' => true, // affiche les cases à cocher
-                'attr' => ['class' => 'mb-3'], 
-                'label_attr' => ['class' => 'mb-1 fw-bold'] 
-            ])
-            // Mp géré manuellement ds le contrôleur
-            ->add('plainPassword', RepeatedType::class, [
-                'type' => PasswordType::class,
-                'mapped' => false, 
-                'required' => $options['is_new'], // requis seulement si nouvel utilisateur
-                'first_options'  => [
-                    'label' => 'mot de passe',
-                    'attr' => ['class' => 'form-control-lg'],
-                ],
-                'second_options' => [
-                    'label' => 'répéter le mot de passe',
-                    'attr' => ['class' => 'form-control-lg'],
-                ],
-                'invalid_message' => 'les champs du mot de passe doivent correspondre.',
-                'constraints' => $options['is_new'] ? [ // contraintes si nouvel utilisateur
-                    new NotBlank([
-                        'message' => 'veuillez entrer un mot de passe',
-                    ]),
-                    new Length([
-                        'min' => 6,
-                        'minMessage' => 'votre mot de passe doit comporter au moins {{ limit }} caractères',
-                        'max' => 4096, // limite pour les hash
-                    ]),
-                ] : [ // contraintes si modifie utilisateur existant (le mdp peut être vide)
-                    new Length([ 
-                        'min' => 6,
-                        'minMessage' => 'votre mot de passe doit comporter au moins {{ limit }} caractères',
-                        'max' => 4096,
-                    ]),
-                ],
-            ])
-        ;
-    }
-
-    public function configureOptions(OptionsResolver $resolver): void
-    {
-        $resolver->setDefaults([
-            'data_class' => Utilisateur::class,
-            'is_new' => false, 
-        ]);
-        // s'assurer que l'option 'is_new' est bien un booléen
-        $resolver->setAllowedTypes('is_new', 'bool');
-    }
-}
+    <button class="btn btn-lg mt-3" style="background-color: var(--bleu-majorelle); border-color: var(--bleu-majorelle); color: white;">{{ button_label|default('Enregistrer') }}</button>
+{{ form_end(form) }}

@@ -6,7 +6,7 @@
 <div class="content-card">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h1>Liste des Utilisateurs</h1>
-        <a href="{{ path('app_utilisateur_new') }}" class="btn btn-lg" style="background-color: var(--bleu-majorelle); border-color: var(--bleu-majorelle); color: white;">Créer un nouvel utilisateur</a>
+        <a href="{{ path("app_admin_utilisateur_new") }}" class="btn btn-lg" style="background-color: var(--bleu-majorelle); border-color: var(--bleu-majorelle); color: white;">Créer un nouvel utilisateur</a>
     </div>
 
     <div class="table-responsive">
@@ -45,9 +45,9 @@
                         {% endfor %}
                     </td>
                     <td class="text-center">
-                        <a href="{{ path('app_utilisateur_show', {'id': utilisateur.id}) }}" class="btn btn-sm btn-info">Voir</a>
-                        <a href="{{ path('app_utilisateur_edit', {'id': utilisateur.id}) }}" class="btn btn-sm btn-warning">Modifier</a>
-                        {# Le formulaire de suppression est ici #}
+                        <a href="{{ path('app_admin_utilisateur_show', {'id': utilisateur.id}) }}" class="btn btn-sm btn-info">Voir</a>
+                        <a href="{{ path('app_admin_utilisateur_edit', {'id': utilisateur.id}) }}" class="btn btn-sm btn-warning">Modifier</a>
+                        {# Le formulaire de suppression ici #}
                         {{ include('utilisateur/_delete_form.html.twig', {'button_label': 'Supprimer', 'button_class': 'btn btn-sm btn-danger'}) }}
                     </td>
                 </tr>

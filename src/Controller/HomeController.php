@@ -13,7 +13,6 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class HomeController extends AbstractController
 {
-    // page d'accueil pour les utilisateurs connectés
     #[Route('/home', name: 'app_home')]
     public function index(): Response
     {
@@ -23,7 +22,6 @@ class HomeController extends AbstractController
         ]);
     }
 
-    // page d'accueil public pour les visiteurs
     #[Route('/', name: 'app_public_home')]
     public function publicHome(Request $request, EntityManagerInterface $entityManager): Response
     {
